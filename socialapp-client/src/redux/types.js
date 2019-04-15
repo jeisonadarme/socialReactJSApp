@@ -1,7 +1,7 @@
 export const SET_AUTHENTICATED = "SET_AUTHENTICATED";
 export const SET_UNAUTEHNTICATED = "SET_UNAUTEHNTICATED";
 export const SET_USER = "SET_USER";
-export const LOADING_USer = "LOADING_USER";
+export const LOADING_USER = "LOADING_USER";
 
 export const SET_ERRORS = "SET_ERRORS";
 export const LOADING_UI = "LOADING_UI";
