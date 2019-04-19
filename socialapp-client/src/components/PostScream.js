@@ -18,21 +18,22 @@ import MyButton from "../util/MyButton";
 
 // Redux
 import { connect } from "react-redux";
-import { postScream } from "../redux/actions/dataActions";
+import { postScream, clearErrors } from "../redux/actions/dataActions";
 
 const styles = theme => ({
   ...theme,
   submitButton: {
     position: "relative",
-    top: "10px"
+    top: "10px",
+    float: "right"
   },
   progressSpinner: {
     position: "absolute"
   },
   closeButton: {
     position: "absolute",
-    left: "90%",
-    top: "0px"
+    left: "91%",
+    top: "6%"
   }
 });
 
@@ -50,15 +51,17 @@ class PostScream extends Component {
     }
     if (!nextProps.UI.errors && !nextProps.UI.loading) {
       this.setState({
-        body: ""
+        body: "",
+        open: false,
+        errors: {}
       });
-      this.handleClose();
     }
   }
   handleOpen = () => {
     this.setState({ open: true });
   };
   handleClose = () => {
+    this.props.clearErrors();
     this.setState({ open: false, errors: {} });
   };
   handleChange = event => {
@@ -135,7 +138,8 @@ class PostScream extends Component {
 
 PostScream.propsTypes = {
   postScream: PropTypes.func.isRequired,
-  UI: PropTypes.object.isRequired
+  UI: PropTypes.object.isRequired,
+  clearErrors: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -144,5 +148,5 @@ const mapStateToProps = state => ({
 
 export default connect(
   mapStateToProps,
-  { postScream }
+  { postScream, clearErrors }
 )(withStyles(styles)(PostScream));
