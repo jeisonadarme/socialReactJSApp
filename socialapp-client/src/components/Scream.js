@@ -6,6 +6,7 @@ import relativeTime from "dayjs/plugin/relativeTime";
 import { connect } from "react-redux";
 import { likeScream, unLikeScream } from "../redux/actions/dataActions";
 import MyButton from "../util/MyButton";
+import DeleteScream from "../components/DeleteScream";
 
 //MUI
 import Card from "@material-ui/core/Card";
@@ -21,6 +22,7 @@ import FavoriteBorder from "@material-ui/icons/FavoriteBorder";
 
 const style = {
   card: {
+    position: "relative",
     display: "flex",
     marginBottom: 20
   },
@@ -30,6 +32,9 @@ const style = {
   content: {
     padding: 25,
     objectFit: "cover"
+  },
+  likeButton: {
+    padding: "12px 12px 12px 0px"
   }
 };
 
@@ -68,23 +73,38 @@ export class Scream extends Component {
         likeCount,
         commentCount
       },
-      user: { authenticated }
+      user: {
+        authenticated,
+        credentials: { handle }
+      }
     } = this.props;
     const likeButton = !authenticated ? (
-      <MyButton tip="Like">
+      <MyButton tip="Like" btnClassName={classes.likeButton}>
         <Link to="/login">
           <FavoriteBorder color="primary" />
         </Link>
       </MyButton>
     ) : this.likedScream() ? (
-      <MyButton tip="Undo like" onClick={this.unLikeScream}>
+      <MyButton
+        tip="Undo like"
+        onClick={this.unLikeScream}
+        btnClassName={classes.likeButton}
+      >
         <FavoriteIcon color="primary" />
       </MyButton>
     ) : (
-      <MyButton tip="Like Scram" onClick={this.likeScream}>
+      <MyButton
+        tip="Like Scram"
+        onClick={this.likeScream}
+        btnClassName={classes.likeButton}
+      >
         <FavoriteBorder color="primary" />
       </MyButton>
     );
+    const deleteButton =
+      authenticated && userHandle === handle ? (
+        <DeleteScream screamId={screamId} />
+      ) : null;
     return (
       <Card className={classes.card}>
         <CardMedia
@@ -101,6 +121,7 @@ export class Scream extends Component {
           >
             {userHandle}
           </Typography>
+          {deleteButton}
           <Typography variant="body2" color="textSecondary">
             {dayjs(createdAt).fromNow()}
           </Typography>
