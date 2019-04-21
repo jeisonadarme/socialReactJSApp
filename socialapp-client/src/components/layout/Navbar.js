@@ -23,9 +23,11 @@ export class Navbar extends Component {
           {authenticated ? (
             <Fragment>
               <PostScream />
-              <MyButton tip="Home">
-                <HomeIcon />
-              </MyButton>
+              <Button color="inherit" component={Link} to="/">
+                <MyButton tip="Home">
+                  <HomeIcon />
+                </MyButton>
+              </Button>
               <MyButton tip="Notifications">
                 <Notifications />
               </MyButton>
